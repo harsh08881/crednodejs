@@ -62,6 +62,36 @@ app.post('/register', (req, res) => {
     res.redirect('./')
   });
   
+
+
+  app.get('/user/delete', (req,res) => {
+
+    res.sendFile(__dirname + '/delete.html')
+  
+  
+  })
+  
+  app.post('/delete', async (req,res) =>{
+     const { email } =req.body
+     try {
+      // Define a query to find the user you want to delete
+      const query = { email: email }; // Replace with the actual email
+  
+      // Use findOneAndDelete to find and delete the user
+      const deletedUser = await User.findOneAndDelete(query);
+  
+      if (deletedUser) {
+        console.log(`Deleted user: ${deletedUser.email}`);
+      } else {
+        console.log('User not found.');
+      }
+         // Close the MongoDB connection
+    } catch (err) {
+      console.error('Error deleting user:', err);
+    }
+    console.log("fff")
+     res.send("User Successfully Deleted")
+  })
   
 
 
