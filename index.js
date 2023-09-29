@@ -92,8 +92,31 @@ app.post('/register', (req, res) => {
     console.log("fff")
      res.send("User Successfully Deleted")
   })
-  
 
+
+
+ // update url
+  
+ app.get('/u/update',(req,res)=>{
+  res.sendFile(__dirname + '/update.html')
+ })
+
+
+ app.post('/updates',async (req,res) =>{
+     const {email, password} =req.body;
+     try {
+      const filter = { email: email };
+    const update = { password: password };
+    const updateResult = await User.updateOne(filter, update);
+    console.log(`Updated ${updateResult.modifiedCount} document`);
+     }
+     catch (error) {
+      console.error('Error closing MongoDB connection:', error);
+    }
+    res.send("update success")
+
+
+ })
 
 
 
